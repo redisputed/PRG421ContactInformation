@@ -50,14 +50,12 @@ public class ContactInformationUI extends javax.swing.JFrame
     private void initComponents()
     {
 
-        jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
         pnlSelection = new javax.swing.JPanel();
         btnLoadFile = new javax.swing.JButton();
         btnSaveFile = new javax.swing.JButton();
         btnExit = new javax.swing.JButton();
         btnClearContacts = new javax.swing.JButton();
-        jScrollPane3 = new javax.swing.JScrollPane();
+        jScrollPane1 = new javax.swing.JScrollPane();
         table = new javax.swing.JTable();
         pnlDetail = new javax.swing.JPanel();
         lblFirstName = new javax.swing.JLabel();
@@ -78,21 +76,7 @@ public class ContactInformationUI extends javax.swing.JFrame
         btnSave = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
         lblRequired = new javax.swing.JLabel();
-
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][]
-            {
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null},
-                {null, null, null, null}
-            },
-            new String []
-            {
-                "Title 1", "Title 2", "Title 3", "Title 4"
-            }
-        ));
-        jScrollPane2.setViewportView(jTable1);
+        btnUpdate = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -122,8 +106,8 @@ public class ContactInformationUI extends javax.swing.JFrame
         listSelectionModel = table.getSelectionModel();
         listSelectionModel.addListSelectionListener(new SharedListSelectionHandler());
         listSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-		table.setSelectionModel(listSelectionModel);
-        jScrollPane3.setViewportView(table);
+        table.setSelectionModel(listSelectionModel);
+        jScrollPane1.setViewportView(table);
 
         javax.swing.GroupLayout pnlSelectionLayout = new javax.swing.GroupLayout(pnlSelection);
         pnlSelection.setLayout(pnlSelectionLayout);
@@ -132,25 +116,22 @@ public class ContactInformationUI extends javax.swing.JFrame
             .addGroup(pnlSelectionLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(pnlSelectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(pnlSelectionLayout.createSequentialGroup()
-                        .addGroup(pnlSelectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addGroup(pnlSelectionLayout.createSequentialGroup()
-                                .addComponent(btnExit)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnClearContacts))
-                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlSelectionLayout.createSequentialGroup()
-                                .addComponent(btnLoadFile)
-                                .addGap(18, 18, 18)
-                                .addComponent(btnSaveFile)))
-                        .addGap(0, 21, Short.MAX_VALUE))
-                    .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
-                .addContainerGap())
+                    .addGroup(pnlSelectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                        .addGroup(pnlSelectionLayout.createSequentialGroup()
+                            .addComponent(btnExit)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(btnClearContacts))
+                        .addGroup(javax.swing.GroupLayout.Alignment.LEADING, pnlSelectionLayout.createSequentialGroup()
+                            .addComponent(btnLoadFile)
+                            .addGap(18, 18, 18)
+                            .addComponent(btnSaveFile)))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)))
         );
         pnlSelectionLayout.setVerticalGroup(
             pnlSelectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlSelectionLayout.createSequentialGroup()
-                .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 340, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlSelectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnLoadFile)
                     .addComponent(btnSaveFile))
@@ -158,7 +139,7 @@ public class ContactInformationUI extends javax.swing.JFrame
                 .addGroup(pnlSelectionLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnExit)
                     .addComponent(btnClearContacts))
-                .addContainerGap(69, Short.MAX_VALUE))
+                .addContainerGap(14, Short.MAX_VALUE))
         );
 
         lblFirstName.setText("*First Name");
@@ -205,6 +186,8 @@ public class ContactInformationUI extends javax.swing.JFrame
         lblRequired.setFont(new java.awt.Font("Lucida Grande", 2, 10)); // NOI18N
         lblRequired.setForeground(new java.awt.Color(153, 153, 153));
         lblRequired.setText("* denotes a required field");
+
+        btnUpdate.setText("Update");
 
         javax.swing.GroupLayout pnlDetailLayout = new javax.swing.GroupLayout(pnlDetail);
         pnlDetail.setLayout(pnlDetailLayout);
@@ -254,19 +237,21 @@ public class ContactInformationUI extends javax.swing.JFrame
                                         .addGroup(pnlDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(txtCellNumber, javax.swing.GroupLayout.PREFERRED_SIZE, 130, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addComponent(lblCellNumber))))
-                                .addGap(0, 0, Short.MAX_VALUE))
+                                .addGap(0, 5, Short.MAX_VALUE))
                             .addGroup(pnlDetailLayout.createSequentialGroup()
                                 .addComponent(btnNew)
                                 .addGap(18, 18, 18)
                                 .addComponent(btnEdit)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(btnUpdate)
+                                .addGap(18, 18, 18)
                                 .addComponent(btnSave)))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addContainerGap(12, Short.MAX_VALUE))))
         );
         pnlDetailLayout.setVerticalGroup(
             pnlDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(pnlDetailLayout.createSequentialGroup()
-                .addContainerGap()
+                .addGap(7, 7, 7)
                 .addGroup(pnlDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblFirstName)
                     .addComponent(lblMiddleName)
@@ -302,8 +287,9 @@ public class ContactInformationUI extends javax.swing.JFrame
                 .addGroup(pnlDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNew)
                     .addComponent(btnSave)
-                    .addComponent(btnEdit))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(btnEdit)
+                    .addComponent(btnUpdate))
+                .addContainerGap(184, Short.MAX_VALUE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -312,20 +298,18 @@ public class ContactInformationUI extends javax.swing.JFrame
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(pnlSelection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(pnlDetail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(34, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(pnlDetail, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(0, 0, Short.MAX_VALUE)
-                        .addComponent(pnlSelection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap())
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(pnlDetail, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(pnlSelection, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(30, 30, 30))
         );
 
         pack();
@@ -491,6 +475,27 @@ public class ContactInformationUI extends javax.swing.JFrame
         setEditable(true);
     }//GEN-LAST:event_btnNewActionPerformed
 
+    class SharedListSelectionHandler implements ListSelectionListener
+    {
+
+        @Override
+        public void valueChanged(ListSelectionEvent e)
+        {
+            try
+            {
+                Contact person;
+                person = contacts.get(table.getSelectedRow());
+                displayContact(person);
+                setEnableNewEdit(true);
+            }
+            catch (ArrayIndexOutOfBoundsException ex)
+            {
+                //do nothing
+            }
+        }
+
+    }
+
     /**
      * @param args the command line arguments
      */
@@ -557,9 +562,8 @@ public class ContactInformationUI extends javax.swing.JFrame
     private javax.swing.JButton btnNew;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnSaveFile;
-    private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTable jTable1;
+    private javax.swing.JButton btnUpdate;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAge;
     private javax.swing.JLabel lblCellNumber;
     private javax.swing.JLabel lblEmailAddress;
@@ -580,24 +584,4 @@ public class ContactInformationUI extends javax.swing.JFrame
     private javax.swing.JTextField txtNickname;
     // End of variables declaration//GEN-END:variables
 
-    class SharedListSelectionHandler implements ListSelectionListener
-    {
-
-        @Override
-        public void valueChanged(ListSelectionEvent e)
-        {
-            try
-            {
-                Contact person;
-                person = contacts.get(table.getSelectedRow());
-                displayContact(person);
-                setEnableNewEdit(true);
-            }
-            catch (ArrayIndexOutOfBoundsException ex)
-            {
-                //do nothing
-            }
-        }
-
-    }
 }
