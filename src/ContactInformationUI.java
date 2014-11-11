@@ -119,16 +119,10 @@ public class ContactInformationUI extends javax.swing.JFrame
         });
 
         table.setModel(model);
-        table.addInputMethodListener(new java.awt.event.InputMethodListener()
-        {
-            public void inputMethodTextChanged(java.awt.event.InputMethodEvent evt)
-            {
-            }
-            public void caretPositionChanged(java.awt.event.InputMethodEvent evt)
-            {
-                tableCaretPositionChanged(evt);
-            }
-        });
+        listSelectionModel = table.getSelectionModel();
+        listSelectionModel.addListSelectionListener(new SharedListSelectionHandler());
+        listSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+		table.setSelectionModel(listSelectionModel);
         jScrollPane3.setViewportView(table);
 
         javax.swing.GroupLayout pnlSelectionLayout = new javax.swing.GroupLayout(pnlSelection);
@@ -485,14 +479,6 @@ public class ContactInformationUI extends javax.swing.JFrame
         clearTable();
         clearArray(contacts);
     }//GEN-LAST:event_btnClearContactsActionPerformed
-
-    private void tableCaretPositionChanged(java.awt.event.InputMethodEvent evt)//GEN-FIRST:event_tableCaretPositionChanged
-    {//GEN-HEADEREND:event_tableCaretPositionChanged
-        Contact person;
-        person = contacts.get(table.getSelectedRow());
-        displayContact(person);
-
-    }//GEN-LAST:event_tableCaretPositionChanged
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnEditActionPerformed
     {//GEN-HEADEREND:event_btnEditActionPerformed
