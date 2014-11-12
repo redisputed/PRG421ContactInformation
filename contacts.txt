@@ -1,0 +1,4 @@
+Daffy;none;Duck;none;65;daffy@email.com;555-555-1234
+Porky;none;Pig;The Oink;74;porky@email.com;555-555-2345
+Bugs;H;Bunny;none;75;bugs@email.com;555-555-4567
+Iron;none;Man;none;35;tinman@email.com;555-555-6789
