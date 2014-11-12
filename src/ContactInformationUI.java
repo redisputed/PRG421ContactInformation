@@ -1,5 +1,10 @@
 
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.Scanner;
+import javax.swing.JFileChooser;
 import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
@@ -76,13 +81,26 @@ public class ContactInformationUI extends javax.swing.JFrame
         btnSave = new javax.swing.JButton();
         btnEdit = new javax.swing.JButton();
         lblRequired = new javax.swing.JLabel();
-        btnUpdate = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         btnLoadFile.setText("Load File");
+        btnLoadFile.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnLoadFileActionPerformed(evt);
+            }
+        });
 
         btnSaveFile.setText("Save File");
+        btnSaveFile.addActionListener(new java.awt.event.ActionListener()
+        {
+            public void actionPerformed(java.awt.event.ActionEvent evt)
+            {
+                btnSaveFileActionPerformed(evt);
+            }
+        });
 
         btnExit.setText("Exit");
         btnExit.addActionListener(new java.awt.event.ActionListener()
@@ -103,9 +121,12 @@ public class ContactInformationUI extends javax.swing.JFrame
         });
 
         table.setModel(model);
+        // this code comes from Oracle.com's TableListSelectionDemo.java
+        //https://docs.oracle.com/javase/tutorial/uiswing/examples/events/index.html#TableListSelectionDemo
         listSelectionModel = table.getSelectionModel();
         listSelectionModel.addListSelectionListener(new SharedListSelectionHandler());
         listSelectionModel.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+
         table.setSelectionModel(listSelectionModel);
         jScrollPane1.setViewportView(table);
 
@@ -187,8 +208,6 @@ public class ContactInformationUI extends javax.swing.JFrame
         lblRequired.setForeground(new java.awt.Color(153, 153, 153));
         lblRequired.setText("* denotes a required field");
 
-        btnUpdate.setText("Update");
-
         javax.swing.GroupLayout pnlDetailLayout = new javax.swing.GroupLayout(pnlDetail);
         pnlDetail.setLayout(pnlDetailLayout);
         pnlDetailLayout.setHorizontalGroup(
@@ -243,8 +262,6 @@ public class ContactInformationUI extends javax.swing.JFrame
                                 .addGap(18, 18, 18)
                                 .addComponent(btnEdit)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(btnUpdate)
-                                .addGap(18, 18, 18)
                                 .addComponent(btnSave)))
                         .addContainerGap(12, Short.MAX_VALUE))))
         );
@@ -287,8 +304,7 @@ public class ContactInformationUI extends javax.swing.JFrame
                 .addGroup(pnlDetailLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnNew)
                     .addComponent(btnSave)
-                    .addComponent(btnEdit)
-                    .addComponent(btnUpdate))
+                    .addComponent(btnEdit))
                 .addContainerGap(184, Short.MAX_VALUE))
         );
 
@@ -327,6 +343,16 @@ public class ContactInformationUI extends javax.swing.JFrame
 
         txtFirstName.requestFocus();
         setEnableNewEdit(false);
+    }
+
+    private void clearTable()
+    {
+        model.setRowCount(0);
+    }
+
+    private void clearArray(ArrayList<Contact> c)
+    {
+        c.clear();
     }
 
     private void getData()
@@ -392,16 +418,6 @@ public class ContactInformationUI extends javax.swing.JFrame
 
     }
 
-    private void clearTable()
-    {
-        model.setRowCount(0);
-    }
-
-    private void clearArray(ArrayList<Contact> c)
-    {
-        c.clear();
-    }
-
     private void addDataToTable(ArrayList<Contact> c)
     {
         clearTable();
@@ -437,6 +453,7 @@ public class ContactInformationUI extends javax.swing.JFrame
         txtAge.setEditable(state);
         txtEmailAddress.setEditable(state);
         txtCellNumber.setEditable(state);
+        btnSave.setEnabled(state);
     }
 
     private void setEnableNewEdit(Boolean state)
@@ -462,18 +479,110 @@ public class ContactInformationUI extends javax.swing.JFrame
         clearInput();
         clearTable();
         clearArray(contacts);
+        setEditable(true);
     }//GEN-LAST:event_btnClearContactsActionPerformed
 
     private void btnEditActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnEditActionPerformed
     {//GEN-HEADEREND:event_btnEditActionPerformed
         setEditable(true);
+        contacts.remove(table.getSelectedRow());
     }//GEN-LAST:event_btnEditActionPerformed
 
     private void btnNewActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnNewActionPerformed
     {//GEN-HEADEREND:event_btnNewActionPerformed
         clearInput();
         setEditable(true);
+        setEnableNewEdit(false);
     }//GEN-LAST:event_btnNewActionPerformed
+
+    private void btnSaveFileActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnSaveFileActionPerformed
+    {//GEN-HEADEREND:event_btnSaveFileActionPerformed
+        String filename = "contacts.txt";
+        // this code comes from Starting out with Java:Early Objects 4th ed
+        // by Tony Gaddis Published Addison-Wesley
+
+        JFileChooser fileChooser = new JFileChooser(".");
+        int status = fileChooser.showSaveDialog(null);
+
+        if (status == JFileChooser.APPROVE_OPTION)
+        {
+            File selectedFile = fileChooser.getSelectedFile();
+            filename = selectedFile.getPath();
+        }
+
+        PrintWriter outputFile = null;
+
+        try
+        {
+
+            outputFile = new PrintWriter(filename);
+
+            for (Contact c : contacts)
+            {
+                outputFile.println(c.writeToFile(';'));
+            }
+
+        }
+        catch (FileNotFoundException ex)
+        {
+            JOptionPane.showMessageDialog(null,
+                    ex.getMessage(),
+                    "File Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+        finally
+        {
+            outputFile.close();
+        }
+
+    }//GEN-LAST:event_btnSaveFileActionPerformed
+
+    private void btnLoadFileActionPerformed(java.awt.event.ActionEvent evt)//GEN-FIRST:event_btnLoadFileActionPerformed
+    {//GEN-HEADEREND:event_btnLoadFileActionPerformed
+        clearArray(contacts);
+        String filename = "contacts.txt";
+        // this code comes from Starting out with Java:Early Objects 4th ed
+        // by Tony Gaddis Published Addison-Wesley
+
+        JFileChooser fileChooser = new JFileChooser(".");
+        int status = fileChooser.showOpenDialog(null);
+
+        if (status == JFileChooser.APPROVE_OPTION)
+        {
+            File selectedFile = fileChooser.getSelectedFile();
+            filename = selectedFile.getPath();
+        }
+
+        File file = new File(filename);
+        Scanner inputFile = null;
+        try
+        {
+            inputFile = new Scanner(file);
+
+            while (inputFile.hasNext())
+            {
+                String line = inputFile.nextLine();
+                String[] data = line.split(";");
+
+                Contact person = new Contact(data[0], data[1], data[2], data[3], data[4], data[5], data[6]);
+
+                contacts.add(person);
+
+                addDataToTable(contacts);
+            }
+        }
+        catch (FileNotFoundException ex)
+        {
+            JOptionPane.showMessageDialog(null,
+                    ex.getMessage(),
+                    "File Error",
+                    JOptionPane.ERROR_MESSAGE);
+        }
+        finally
+        {
+            inputFile.close();
+        }
+    }//GEN-LAST:event_btnLoadFileActionPerformed
 
     class SharedListSelectionHandler implements ListSelectionListener
     {
@@ -562,7 +671,6 @@ public class ContactInformationUI extends javax.swing.JFrame
     private javax.swing.JButton btnNew;
     private javax.swing.JButton btnSave;
     private javax.swing.JButton btnSaveFile;
-    private javax.swing.JButton btnUpdate;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JLabel lblAge;
     private javax.swing.JLabel lblCellNumber;
